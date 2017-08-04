@@ -61,12 +61,12 @@ int main() {
 
     gnb.train(X_train, Y_train);
 
-//    for (auto i: gnb.stats){
-//        for (auto j: i){
-//            for (auto k: j)
-//                cout << k << ' ';
-//        }
-//    }
+    for (auto i: gnb.stats){
+        for (auto j: i){
+            for (auto k: j)
+                cout << k << ' ';
+        }
+    }
 
     cout << "X_test number of elements " << X_test.size() << endl;
     cout << "X_test element size " << X_test[0].size() << endl;

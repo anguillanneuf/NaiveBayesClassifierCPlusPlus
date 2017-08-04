@@ -9,20 +9,12 @@
 /Users/tz/Documents/carnd/T3L3_NaiveBayes_C/classifier.cpp
 iostream
 -
-sstream
--
-fstream
--
 math.h
--
-numeric
 -
 vector
 -
 classifier.h
 /Users/tz/Documents/carnd/T3L3_NaiveBayes_C/classifier.h
-map
--
 
 /Users/tz/Documents/carnd/T3L3_NaiveBayes_C/classifier.h
 iostream

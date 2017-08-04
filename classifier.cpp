@@ -5,13 +5,11 @@
 //
 
 #include <iostream>
-#include <sstream>
-#include <fstream>
 #include <math.h>
-#include<numeric>
+//#include<numeric>
 #include <vector>
 #include "classifier.h"
-#include <map>
+
 #define _USE_MATH_DEFINES
 
 using namespace std;
@@ -26,17 +24,31 @@ GNB::GNB()
 GNB::~GNB() {}
 
 double GNB::find_mean(vector<double> v) {
-    return accumulate(v.begin(), v.end(), 0.0) / v.size();
+    //return accumulate(v.begin(), v.end(), 0.0) / v.size();
+
+    double sum = 0.0;
+    for(int i = 0; i < v.size(); i++)
+        sum += v[i];
+    return (sum / v.size());
 }
 
 double GNB::find_stdev(vector<double> v) {
-    size_t n = v.size();
-    vector<double> diff(n);
 
-    double mu = accumulate(v.begin(), v.end(), 0.0) / n;
+/*    size_t n = v.size();
+    vector<double> diff(n);
+    double mu = find_mean(v);
     transform(v.begin(), v.end(), diff.begin(), [mu](double x) { return x - mu; });
     double sq_sum = inner_product(diff.begin(), diff.end(), diff.begin(), 0.0);
-    return sqrt(sq_sum / (n-1));
+    return sqrt(sq_sum / (n-1));*/
+
+    double mu = find_mean(v);
+    double temp = 0.0;
+
+    for(int i = 0; i < v.size(); i++){
+        temp += (v[i] - mu) * (v[i] - mu) ;
+    };
+    return sqrt( temp / (v.size() - 1));
+
 }
 
 void GNB::train(vector<vector<double>> data, vector<string> labels) {
@@ -67,10 +79,13 @@ void GNB::train(vector<vector<double>> data, vector<string> labels) {
         {
             case 'l':
                 ll.push_back(data[i]);
+                break;
             case 'k':
                 kl.push_back(data[i]);
+                break;
             case 'r':
                 rl.push_back(data[i]);
+                break;
         }
     };
 
@@ -121,7 +136,24 @@ string GNB::predict(vector<double> v) {
         }
     }
 
-    int ans = distance(begin(probabilities), max_element(begin(probabilities), end(probabilities)));
+    //int ans = distance(begin(probabilities), max_element(begin(probabilities), end(probabilities)));
+
+    double highest = 0.0;
+    int i = 0;
+    while(i < 3){
+        if(round(probabilities[i]*1e6) > highest){
+            highest = round(probabilities[i]*1e6);
+        }
+        i++;
+    }
+
+    int ans;
+
+    for(int j = 0; j < 3; j++){
+        if(round(probabilities[j]*1e6) == highest){
+            ans = j;
+        }
+    }
 
     return this->possible_labels[ans];
 
