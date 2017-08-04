@@ -138,23 +138,17 @@ string GNB::predict(vector<double> v) {
 
     //int ans = distance(begin(probabilities), max_element(begin(probabilities), end(probabilities)));
 
-    double highest = 0.0;
-    int i = 0;
-    while(i < 3){
-        if(round(probabilities[i]*1e6) > highest){
-            highest = round(probabilities[i]*1e6);
+    // use just one for loop
+    int i = 0, ans = 0;
+    double biggest = 0.0;
+
+    for (auto v: probabilities){
+        if(v > biggest){
+            biggest = v;
+            ans = i;
         }
         i++;
     }
-
-    int ans;
-
-    for(int j = 0; j < 3; j++){
-        if(round(probabilities[j]*1e6) == highest){
-            ans = j;
-        }
-    }
-
     return this->possible_labels[ans];
 
 }
