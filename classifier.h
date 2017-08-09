@@ -30,7 +30,7 @@ public:
      */
     virtual ~GNB();
 
-    void train(vector<vector<double> > data, vector<string> labels);
+    vector<vector<vector<double>>> train(vector<vector<double> > data, vector<string> labels);
 
     string predict(vector<double> v);
 

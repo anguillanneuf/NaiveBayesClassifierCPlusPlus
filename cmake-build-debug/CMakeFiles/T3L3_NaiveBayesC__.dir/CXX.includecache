@@ -39,4 +39,22 @@ math.h
 -
 vector
 -
+matplotlibcpp.h
+/Users/tz/Documents/carnd/T3L3_NaiveBayes_C/matplotlibcpp.h
+
+/Users/tz/Documents/carnd/T3L3_NaiveBayes_C/matplotlibcpp.h
+vector
+-
+map
+-
+numeric
+-
+stdexcept
+-
+iostream
+-
+functional
+-
+python2.7/Python.h
+-
 

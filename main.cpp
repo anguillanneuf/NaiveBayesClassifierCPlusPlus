@@ -3,8 +3,10 @@
 #include <fstream>
 #include <math.h>
 #include <vector>
+#include "matplotlibcpp.h"
 
 using namespace std;
+namespace plt = matplotlibcpp;
 
 vector<vector<double> > Load_State(string file_name) {
     ifstream in_state_(file_name.c_str(), ifstream::in);
@@ -59,7 +61,7 @@ int main() {
 
     GNB gnb = GNB();
 
-    gnb.train(X_train, Y_train);
+    vector<vector<vector<double>>> lf = gnb.train(X_train, Y_train);
 
     for (auto i: gnb.stats){
         for (auto j: i){
@@ -88,6 +90,50 @@ int main() {
 
     float fraction_correct = float(score) / Y_test.size();
     cout << "You got " << (100*fraction_correct) << " correct" << endl;
+
+    vector<string> title = {"s", "d", "sdot", "ddot"};
+    vector<string> color = {"ro", "bo", "gx"};
+    for(int i = 0; i < lf.size(); i ++){
+        size_t n = lf[i].size();
+        for(int j = 0; j < 4; j ++){
+            vector<double> temp;
+            for(int k = 0; k < n; k ++){
+                temp.push_back(lf[i][k][j]);
+            }
+            plt::subplot(2,2,j+1);
+            plt::title(title[j]);
+            plt::plot(temp, color[i]);
+        }
+    }
+
+    plt::subplot(2,2,1);
+//    plt::title("s");
+//    plt::plot(lf[0][0], "ro");
+//    plt::plot(lf[1][0], "bo");
+//    plt::plot(lf[2][0], "gx");
+//
+//    plt::subplot(2,2,2);
+//    plt::title("d");
+//    plt::plot(lf[0][1], "ro");
+//    plt::plot(lf[1][1], "bo");
+//    plt::plot(lf[2][1], "gx");
+//
+//
+//    plt::subplot(2,2,3);
+//    plt::title("s dot");
+//    plt::plot(lf[0][2], "ro");
+//    plt::plot(lf[1][2], "bo");
+//    plt::plot(lf[2][2], "gx");
+//
+//    plt::subplot(2,2,4);
+//    plt::title("d dot");
+//
+//    plt::plot(lf[0][3], "ro");
+//    plt::plot(lf[1][3], "bo");
+//    plt::plot(lf[2][3], "gx");
+
+
+    plt::show();
 
     return 0;
 }

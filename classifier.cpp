@@ -10,9 +10,11 @@
 #include <vector>
 #include "classifier.h"
 
+
 #define _USE_MATH_DEFINES
 
 using namespace std;
+
 
 /**
  * Initializes GNB
@@ -51,7 +53,7 @@ double GNB::find_stdev(vector<double> v) {
 
 }
 
-void GNB::train(vector<vector<double>> data, vector<string> labels) {
+vector<vector<vector<double>>> GNB::train(vector<vector<double>> data, vector<string> labels) {
 
     /*
         Trains the classifier with N data points and labels.
@@ -103,6 +105,8 @@ void GNB::train(vector<vector<double>> data, vector<string> labels) {
             stats[i][j].assign({mu, stdev});
         }
     }
+
+    return l;
 }
 
 string GNB::predict(vector<double> v) {
